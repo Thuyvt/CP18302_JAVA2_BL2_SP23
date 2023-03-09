@@ -85,4 +85,9 @@ public class QuanLyMonAn {
             xuat(list);
         }
     }
+
+    public void keThua(List<MonAn> list) {
+        MonAn ts = new TraSua("tran chau den", "Hong tra sua", 350000, 2);
+        System.out.println(ts.toString());
+    }
 }

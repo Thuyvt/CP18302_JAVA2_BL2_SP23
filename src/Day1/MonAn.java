@@ -12,8 +12,8 @@ package Day1;
  */
 public class MonAn {
     private String ten;
-    private int gia;
-    private int soLuong;
+    int gia;
+    protected int soLuong;
 
     public MonAn() {
     }
