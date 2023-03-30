@@ -7,6 +7,7 @@ package Day10;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -14,10 +15,11 @@ import javax.swing.table.DefaultTableModel;
  * @author ThuyVT
  */
 public class QLGB extends javax.swing.JFrame {
+
     // danh sách đối tượng
     List<GiuongBenh> list = new ArrayList<>();
     DefaultTableModel defaultTable = new DefaultTableModel();
-    
+
     /**
      * Creates new form QLGB
      */
@@ -35,6 +37,7 @@ public class QLGB extends javax.swing.JFrame {
         // index = 4 -1 = 3
         hienThiLenForm(list.get(3));
     }
+
     // tạo danh sách mặc định
     public void layDs(List<GiuongBenh> danhSach) {
         // Combo box: Khoa nội, Khoa ngoại, Khoa sản
@@ -42,9 +45,9 @@ public class QLGB extends javax.swing.JFrame {
         danhSach.add(new GiuongBenh("Linh", 431, "P303", 2, "Hoan", "Phó khoa", false, "Khoa ngoại", 233.44, 5));
         danhSach.add(new GiuongBenh("Trinh", 123, "P303", 4, "Duy", "Y tá", false, "Khoa nội", 12.98, 7));
         danhSach.add(new GiuongBenh("Vân Anh", 4445, "P303", 6, "Kiên", "Bác sĩ chính", true, "Khoa sản", 555.000, 8));
-        danhSach.add(new GiuongBenh("Toàn", 4333, "P303", 1, "Thúy", "Trưởng khoa", true, "Khoa ngoại", 233.44, 9));
+//        danhSach.add(new GiuongBenh("Toàn", 4333, "P303", 1, "Thúy", "Trưởng khoa", true, "Khoa ngoại", 233.44, 9));
     }
-    
+
     // Hiển thị lên form
     public void hienThiLenForm(GiuongBenh gb) {
         txtTenBn.setText(gb.getTenBn());
@@ -59,17 +62,20 @@ public class QLGB extends javax.swing.JFrame {
         } else if (gb.getChucVu().equalsIgnoreCase("Phó khoa")) {
             rdoPho.setSelected(true);
         }
+        txtSoPhong.setText(gb.getSoPhong());
+        txtSoGiuong.setText(String.valueOf(gb.getSoGiuong()));
         chkVip.setSelected(gb.isVip());
         cboKhoa.setSelectedItem(gb.getKhoa());
         txtTien.setText(String.valueOf(gb.getTien()));
         txtSoNgay.setText(String.valueOf(gb.getSoNgay()));
     }
+
     // hiển thị lên bảng
     public void hienThiLenBang(List<GiuongBenh> danhSach) {
         // reset bảng
         defaultTable.setRowCount(0);
-        for ( GiuongBenh gb : danhSach) {
-            defaultTable.addRow(new Object[] {
+        for (GiuongBenh gb : danhSach) {
+            defaultTable.addRow(new Object[]{
                 gb.getTenBn(),
                 gb.getMaBn(),
                 gb.getSoPhong(),
@@ -83,6 +89,36 @@ public class QLGB extends javax.swing.JFrame {
                 gb.tinhTien()
             });
         }
+    }
+
+    // lấy dữ liệu từ form
+    public GiuongBenh layDuLieuTuForm() {
+        String chucVu = "Bác sĩ chính";
+        if (rdoYta.isSelected()) {
+            chucVu = "Y tá";
+        } else if (rdoTruong.isSelected()) {
+            chucVu = "Trưởng khoa";
+        } else if (rdoPho.isSelected()) {
+            chucVu = "Phó khoa";
+        }
+//        return new GiuongBenh(txtTenBn.getText(), Integer.parseInt(txtMaBn.getText()),
+//                txtSoPhong.getText(), Integer.parseInt(txtSoGiuong.getText()), txtTenBs.getText(), 
+//                rdoYta.isSelected() ? "Y tá" : rdoTruong.isSelected() ? 
+//                        "Trưởng khoa": rdoPho.isSelected() ? "Phó khoa" : "Bác sĩ chính",
+//                chkVip.isSelected(), cboKhoa.getSelectedItem().toString(), 
+//                Double.parseDouble(txtTien.getText()), Integer.parseInt(txtSoNgay.getText()));
+        GiuongBenh gb = new GiuongBenh();
+        gb.setTenBn(txtTenBn.getText());
+        gb.setMaBn(Integer.parseInt(txtMaBn.getText()));
+        gb.setSoPhong(txtSoPhong.getText());
+        gb.setSoGiuong(Integer.parseInt(txtSoGiuong.getText()));
+        gb.setTenBs(txtTenBs.getText());
+        gb.setChucVu(chucVu);
+        gb.setVip(chkVip.isSelected());
+        gb.setKhoa(cboKhoa.getSelectedItem().toString());
+        gb.setTien(Double.parseDouble(txtTien.getText()));
+        gb.setSoNgay(Integer.parseInt(txtSoNgay.getText()));
+        return gb;
     }
 
     /**
@@ -124,6 +160,7 @@ public class QLGB extends javax.swing.JFrame {
         btnGhi = new javax.swing.JButton();
         btnDoc = new javax.swing.JButton();
         btnThem = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -203,10 +240,32 @@ public class QLGB extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblDanhSach);
 
         btnGhi.setText("Ghi");
+        btnGhi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGhiActionPerformed(evt);
+            }
+        });
 
         btnDoc.setText("Đọc");
+        btnDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDocActionPerformed(evt);
+            }
+        });
 
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
+
+        btnReset.setText("Reset");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -280,7 +339,8 @@ public class QLGB extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnGhi, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32))
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
@@ -334,7 +394,9 @@ public class QLGB extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(btnDoc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnThem)))
+                        .addComponent(btnThem)
+                        .addGap(8, 8, 8)
+                        .addComponent(btnReset)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(27, Short.MAX_VALUE))
@@ -358,6 +420,47 @@ public class QLGB extends javax.swing.JFrame {
             hienThiLenForm(list.get(rowIndex));
         }
     }//GEN-LAST:event_tblDanhSachMouseClicked
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+        txtTenBn.setText("");
+        txtMaBn.setText("");
+        txtTenBs.setText("");
+        rdoBsChinh.setSelected(true);
+        txtSoPhong.setText("");
+        txtSoGiuong.setText("");
+        chkVip.setSelected(false);
+        cboKhoa.setSelectedIndex(0);
+        txtTien.setText("");
+        txtSoNgay.setText("");
+
+        list.clear();// xóa trắng danh sách
+//        list = new ArrayList<>();// xóa trắng danh sách
+        layDs(list);
+        hienThiLenBang(list);
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnGhiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGhiActionPerformed
+        // TODO add your handling code here:
+        String mes = new GiuongBenhService().ghiFile("giuongbenh.txt", list);
+        JOptionPane.showConfirmDialog(this, mes);
+    }//GEN-LAST:event_btnGhiActionPerformed
+
+    private void btnDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocActionPerformed
+        // TODO add your handling code here:
+        String mes = new GiuongBenhService().docFile("giuongbenh.txt", list);
+        JOptionPane.showConfirmDialog(this, mes);
+        System.out.println("List:" + list.size());
+        hienThiLenBang(list);
+    }//GEN-LAST:event_btnDocActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        // Kiểm tra dữ liệu trước khi thêm vào danh sách
+        list.add(layDuLieuTuForm());
+        // hiển thị lại danh sách 
+        hienThiLenBang(list);
+    }//GEN-LAST:event_btnThemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -397,6 +500,7 @@ public class QLGB extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDoc;
     private javax.swing.JButton btnGhi;
+    private javax.swing.JButton btnReset;
     private javax.swing.JButton btnThem;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cboKhoa;

@@ -5,11 +5,13 @@
  */
 package Day10;
 
+import java.io.Serializable;
+
 /**
  *
  * @author ThuyVT
  */
-public class GiuongBenh {
+public class GiuongBenh implements Serializable {
 
     private String tenBn;
     private int maBn;

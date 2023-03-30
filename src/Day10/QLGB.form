@@ -117,6 +117,7 @@
                   <Component id="btnGhi" min="-2" pref="73" max="-2" attributes="0"/>
                   <Component id="btnDoc" min="-2" pref="73" max="-2" attributes="0"/>
                   <Component id="btnThem" min="-2" pref="73" max="-2" attributes="0"/>
+                  <Component id="btnReset" min="-2" pref="73" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
           </Group>
@@ -182,6 +183,8 @@
                       <Component id="btnDoc" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnThem" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                      <Component id="btnReset" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -356,16 +359,33 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ghi"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGhiActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDoc">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x110;&#x1ecd;c"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDocActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnThem">
       <Properties>
         <Property name="text" type="java.lang.String" value="Th&#xea;m"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnReset">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Reset"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnResetActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
